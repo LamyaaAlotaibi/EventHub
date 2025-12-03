@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 22 نوفمبر 2025 الساعة 17:25
+-- Generation Time: 02 ديسمبر 2025 الساعة 21:48
 -- إصدار الخادم: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,6 +38,14 @@ CREATE TABLE `bookings` (
   `booking_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `booking_status` enum('Active','Cancelled','Completed') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `bookings`
+--
+
+INSERT INTO `bookings` (`booking_id`, `user_id`, `event_id`, `ticket_quantity`, `total_price`, `payment_method`, `payment_status`, `booking_date`, `booking_status`) VALUES
+(11, 11, 16, 1, 350.00, '', '', '2025-12-02 08:37:46', ''),
+(12, 10, 16, 1, 350.00, '', '', '2025-12-02 10:02:23', '');
 
 --
 -- القوادح `bookings`
@@ -108,8 +116,10 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`event_id`, `organizer_id`, `category_id`, `venue_id`, `event_name`, `description`, `event_date`, `event_time`, `ticket_price`, `capacity`, `tickets_sold`, `tickets_available`, `image_path`, `event_status`, `admin_feedback`, `created_at`, `updated_at`) VALUES
-(13, 11, 1, 1, 'event', 'aaa', '2025-11-25', '13:35', 0.29, 12, 0, 12, '', 'Approved', NULL, '2025-11-21 17:36:05', '2025-11-21 17:45:59'),
-(14, 11, 1, 1, 'gggg', 'hhh', '2025-11-25', '20:50', 0.30, 8, 0, 8, '', 'Pending', NULL, '2025-11-21 17:45:37', '2025-11-21 17:45:37');
+(16, 11, 1, 1, 'Digital Marketing Workshop 2025', 'Master the art of digital marketing in this comprehensive workshop designed for professionals and entrepreneurs.', '2025-11-15', '14:00', 350.00, 100, 2, 98, 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80', 'Approved', NULL, '2025-11-01 21:15:37', '2025-12-02 20:42:32'),
+(18, 11, 3, 3, 'Kids Science Fair 2025', 'An exciting and educational science fair designed for children! Watch amazing experiments and participate in hands-on activities.', '2025-11-18', '10:00', 100.00, 300, 0, 300, 'https://images.unsplash.com/photo-1523294587484-bae6cc870010?auto=format&fit=crop&w=800&q=80', 'Approved', NULL, '2025-11-01 21:15:37', '2025-12-01 19:36:06'),
+(19, 11, 4, 4, 'Business Networking Summit', 'Connect with business leaders, entrepreneurs, and professionals in Riyadh premier networking event.', '2025-11-25', '18:00', 250.00, 200, 0, 200, 'https://images.unsplash.com/photo-1556761175-129418cb2dfe?auto=format&fit=crop&w=800&q=80', 'Approved', NULL, '2025-11-01 21:15:37', '2025-12-02 20:42:32'),
+(20, 11, 1, 5, 'AI & Technology Conference', 'Explore the future of artificial intelligence and emerging technologies at this comprehensive conference.', '2025-12-10', '09:00', 750.00, 150, 0, 150, 'https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=800&q=80', 'Approved', NULL, '2025-11-01 21:15:37', '2025-12-02 20:43:08');
 
 --
 -- القوادح `events`
@@ -138,6 +148,14 @@ CREATE TABLE `notifications` (
   `sent_via` enum('Email','SMS','Both','System') DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `notifications`
+--
+
+INSERT INTO `notifications` (`notification_id`, `user_id`, `notification_type`, `title`, `message`, `related_event_id`, `is_read`, `sent_via`, `created_at`) VALUES
+(13, 11, 'Booking Confirmation', 'Booking Confirmed', 'Your booking for event \"Digital Marketing Workshop 2025\" is confirmed.', 16, 0, 'Both', '2025-12-02 08:37:47'),
+(14, 10, 'Booking Confirmation', 'Booking Confirmed', 'Your booking for event \"Digital Marketing Workshop 2025\" is confirmed.', 16, 0, 'Both', '2025-12-02 10:02:23');
 
 -- --------------------------------------------------------
 
@@ -196,6 +214,14 @@ CREATE TABLE `tickets` (
   `check_in_time` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `tickets`
+--
+
+INSERT INTO `tickets` (`ticket_id`, `booking_id`, `user_id`, `event_id`, `qr_code`, `ticket_status`, `checked_in`, `check_in_time`, `created_at`) VALUES
+(11, 11, 11, 16, '2a0343d5c7e22636112bd91635dcd62f8ed4cee4408d4f98d00f7ce82a6753e3', '', 0, NULL, '2025-12-02 08:37:47'),
+(12, 12, 10, 16, '0d6207bc7456954b7f64eec4544928c50274dc4d1d37f1ffd3b1ea613a652591', '', 0, NULL, '2025-12-02 10:02:23');
 
 -- --------------------------------------------------------
 
@@ -347,7 +373,7 @@ ALTER TABLE `venues`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -359,13 +385,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `support_issues`
@@ -383,13 +409,13 @@ ALTER TABLE `support_messages`
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `venues`
